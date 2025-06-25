@@ -1,6 +1,6 @@
 import { notion } from "./client";
 import { use } from "react";
-import { NotionAPI } from "notion-client";
+
 export function useStaticPages() {
   return use(
     notion.blocks.children.list({
@@ -14,17 +14,4 @@ export function usePage(pageId: string) {
       block_id: pageId,
     })
   );
-}
-
-export function useNotionPage(pageId: string) {
-  // console.log(
-  //   "useNotionPage called",
-  //   process.env.NEXT_PUBLIC_NOTION_AUTH_TOKEN
-  // );
-  const notion2 = new NotionAPI({
-    authToken: process.env.NOTION_API_KEY2!,
-    activeUser: process.env.NOTION_API_USER2,
-  });
-
-  return use(notion2.getPage(pageId!));
 }
