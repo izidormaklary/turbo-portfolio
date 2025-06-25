@@ -1,0 +1,16 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "OPENAI_API_KEY",
+        "NOTION_API_KEY",
+        "NEXT_PUBLIC_NOTION_PARENT_PAGE_ID"
+      ]
+    }
+  }
+}
