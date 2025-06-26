@@ -24,10 +24,6 @@ export async function POST(req: NextRequest) {
     .sort((a, b) => b.similarity - a.similarity)
     .slice(0, 3)
     .filter((r) => r.similarity > 0.13); // Filter out low similarity chunks
-  console.log(
-    "Ranked Chunks:",
-    ranked.map((r) => ({ sentence: r.chunk, similarity: r.similarity }))
-  );
 
   const messages: { role: "system" | "user"; content: string }[] = [
     {

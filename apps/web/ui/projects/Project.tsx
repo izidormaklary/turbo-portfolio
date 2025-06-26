@@ -1,16 +1,19 @@
 import React from "react";
 import { usePage } from "@/utils/notion/queries";
 import { BlockObjectResponse } from "@notionhq/client";
+import RenderPage from "@/ui/notion/RenderPage";
+import ProjectHeader from "./ProjectHeader";
+
 interface Props {
   pageId: string;
   title: string;
+  group: string;
 }
-import RenderPage from "@/ui/notion/RenderPage";
-import ProjectHeader from "./ProjectHeader";
+
 export default function Project({ pageId, title }: Props) {
   const pageData = usePage(pageId);
   return (
-    <div id={pageId} className={``}>
+    <div id={pageId} className={` lg:w-3xl xl:w-4xl`}>
       <ProjectHeader title={title} />
       <RenderPage notionData={pageData.results as BlockObjectResponse[]} />
     </div>

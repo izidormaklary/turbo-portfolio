@@ -37,7 +37,7 @@ export default function Chat() {
     <div className="" onClick={() => setFocused(true)}>
       <div
         className={` cursor-text max-w-[720px] transition-all px-5 pt-4 ${focused ? "shadow-xl" : "shadow-lg"}  shadow-amber-200/20  border-[0.1] border-b-gray-50 text-gray-100 text-sm font-mono subpixel-antialiased 
-              bg-black-900     rounded-lg leading-normal overflow-hidden`}
+              bg-gray-950     rounded-lg leading-normal overflow-hidden`}
       >
         <div className="top mb-2 flex">
           <div className="h-3 w-3 bg-red-500 rounded-full"></div>

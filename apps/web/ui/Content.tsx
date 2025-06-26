@@ -1,7 +1,7 @@
 import { BlockObjectResponse } from "@notionhq/client";
-import Project from "./projects/Project";
 import ProjectNav from "./projects/ProjectNav";
 import { useStaticPages } from "@/utils/notion/queries";
+import ProjectGroup from "./projects/ProjectGroup";
 
 export default function Content() {
   const pages = useStaticPages();
@@ -10,7 +10,7 @@ export default function Content() {
     .map((e) => {
       const [group, title] = e.child_page.title.split(":");
       return {
-        id: e.id,
+        pageId: e.id,
         title,
         group,
         priority: e.child_page?.title?.toLowerCase().includes("priority")
@@ -18,14 +18,13 @@ export default function Content() {
           : 0,
       };
     });
+
   return (
     <div className="container mx-auto">
-      <main className="flex flex-row gap-[32px] row-start-2 items-center sm:items-start">
+      <main className="flex flex-row justify-evenly gap-[32px] row-start-2 items-center sm:items-start">
         <ProjectNav pages={filtered} />
-        <div className="flex flex-col">
-          {filtered.map((p) => (
-            <Project pageId={p.id} title={p.title} key={p.id} />
-          ))}
+        <div className="flex flex-col items-center ">
+          <ProjectGroup pages={filtered} />
         </div>
       </main>
     </div>

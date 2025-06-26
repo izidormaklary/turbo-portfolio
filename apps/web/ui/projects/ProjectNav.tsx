@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import groupBy from "lodash/groupBy";
 import { useSearchParams } from "next/navigation";
 interface Props {
-  pages: { id: string; priority?: number; title: string; group: string }[];
+  pages: { pageId: string; priority?: number; title: string; group: string }[];
 }
 export default function ProjectNav({ pages }: Props) {
   const onNavClick = useCallback((pageId: string) => {
@@ -24,7 +24,7 @@ export default function ProjectNav({ pages }: Props) {
             .sort((a, b) => (a.priority ?? 0) - (b.priority ?? 0))
             .map((page) => (
               <button
-                key={page.id}
+                key={page.pageId}
                 onClick={(e) => {
                   e.preventDefault();
                   onNavClick(page.title.replace(" ", "-"));
