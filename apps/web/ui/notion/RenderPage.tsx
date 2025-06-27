@@ -8,7 +8,7 @@ interface Props {
 }
 export default function RenderPage({ notionData }: Props): React.JSX.Element {
   return (
-    <div className="notion-page">
+    <div className="pl-8">
       {notionData.map((block) => {
         switch (block.type) {
           case "paragraph":

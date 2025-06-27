@@ -1,31 +1,40 @@
-import { BlockObjectResponse } from "@notionhq/client";
+"use client";
 import ProjectNav from "./projects/ProjectNav";
-import { useStaticPages } from "@/utils/notion/queries";
 import ProjectGroup from "./projects/ProjectGroup";
+import { ListBlockChildrenResponse } from "@notionhq/client";
+import groupBy from "lodash/groupBy";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
+interface Props {
+  pages: {
+    pageId: string;
+    title: string;
+    group: string;
+    pageData: ListBlockChildrenResponse;
+  }[];
+}
+export default function Content({ pages }: Props) {
+  const grouped = groupBy(pages, (p) => p.group);
+  const params = useSearchParams();
 
-export default function Content() {
-  const pages = useStaticPages();
-  const filtered = (pages.results as BlockObjectResponse[])
-    .filter((e) => e.type === "child_page")
-    .map((e) => {
-      const [group, title] = e.child_page.title.split(":");
-      return {
-        pageId: e.id,
-        title,
-        group,
-        priority: e.child_page?.title?.toLowerCase().includes("priority")
-          ? 1
-          : 0,
-      };
-    });
+  const selectedGroup = useMemo(() => {
+    const project = params.get("project")?.toLowerCase();
+    if (!project || typeof project !== "string") return grouped["about"];
+
+    return (
+      Object.entries(grouped).find(([, p]) =>
+        p
+          .map((e) => e.title.toLowerCase())
+          .includes(project.replace("-", " ").toLowerCase())
+      )?.[1] || grouped["about"]
+    );
+  }, [params, grouped]);
 
   return (
-    <div className="container mx-auto">
+    <div className="container min-h-screen mx-auto">
       <main className="flex flex-row justify-evenly gap-[32px] row-start-2 items-center sm:items-start">
-        <ProjectNav pages={filtered} />
-        <div className="flex flex-col items-center ">
-          <ProjectGroup pages={filtered} />
-        </div>
+        <ProjectNav pages={pages} />
+        <ProjectGroup pages={selectedGroup} />
       </main>
     </div>
   );

@@ -1,6 +1,8 @@
 import React from "react";
-import { usePage } from "@/utils/notion/queries";
-import { BlockObjectResponse } from "@notionhq/client";
+import {
+  BlockObjectResponse,
+  ListBlockChildrenResponse,
+} from "@notionhq/client";
 import RenderPage from "@/ui/notion/RenderPage";
 import ProjectHeader from "./ProjectHeader";
 
@@ -8,10 +10,10 @@ interface Props {
   pageId: string;
   title: string;
   group: string;
+  pageData: ListBlockChildrenResponse;
 }
 
-export default function Project({ pageId, title }: Props) {
-  const pageData = usePage(pageId);
+export default function Project({ pageId, title, pageData }: Props) {
   return (
     <div id={pageId} className={` lg:w-3xl xl:w-4xl`}>
       <ProjectHeader title={title} />
