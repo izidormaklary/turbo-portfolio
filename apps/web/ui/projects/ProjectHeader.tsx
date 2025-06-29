@@ -23,7 +23,7 @@ export default function ProjectHeader({ title }: Props) {
     [params, title] // Re-run effect when params change
   );
   return (
-    <h1 id={`p-header-${title}`} className="pt-4 text-3xl font-bold">
+    <h1 id={`p-header-${title}`} className="py-4 text-3xl font-bold">
       {title}
     </h1>
   );
