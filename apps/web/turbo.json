@@ -9,7 +9,9 @@
       "env": [
         "OPENAI_API_KEY",
         "NOTION_API_KEY",
-        "NEXT_PUBLIC_NOTION_PARENT_PAGE_ID"
+        "NEXT_PUBLIC_NOTION_PARENT_PAGE_ID",
+        "IMAGEKIT_PUBLIC_KEY",
+        "IMAGEKIT_PRIVATE_KEY"
       ]
     }
   }

@@ -15,7 +15,7 @@ export default function ProjectHeader({ title }: Props) {
       if (project === title.replace(" ", "-")) {
         document.title = `Izidor Maklary | ${title}`;
         document.getElementById(`p-header-${title}`)?.scrollIntoView({
-          behavior: "smooth",
+          // behavior: "smooth",
           block: "start",
         });
       }

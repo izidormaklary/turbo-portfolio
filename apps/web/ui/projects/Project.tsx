@@ -15,7 +15,7 @@ interface Props {
 
 export default function Project({ pageId, title, pageData }: Props) {
   return (
-    <div id={pageId} className={` lg:w-3xl xl:w-4xl`}>
+    <div id={pageId} className={``}>
       <ProjectHeader title={title} />
       <RenderPage notionData={pageData.results as BlockObjectResponse[]} />
     </div>

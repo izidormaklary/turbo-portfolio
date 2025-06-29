@@ -2,13 +2,12 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useState } from "react";
-import { set } from "zod/v4";
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit, status } = useChat({
     api: "/api/summary",
   });
-  const [focused, setFocused] = useState(true);
+  const [focused, setFocused] = useState(false);
 
   useEffect(() => {
     if (focused) {
@@ -74,16 +73,16 @@ export default function Chat() {
           ))}
         </div>
 
-        <form className="p-0 mt-2" onSubmit={handleSubmit}>
+        <form className="flex py-2 mt-2" onSubmit={handleSubmit}>
           <span className="text-amber-300">{"usr-> "}</span>{" "}
           <input
             id="chat-input"
-            onFocus={(e) => setFocused(true)}
-            autoFocus={true}
-            className="p-2 sm:p-4 focus w-[90%] inline-block focus:ring-red-500/10 focus:outline-0"
+            onFocus={() => setFocused(true)}
+            // autoFocus={true}
+            className="p-0 px-4 not-focus-visible:animate-pulse grow inline-block focus:ring-red-500/10 focus:outline-0"
             value={input}
             placeholder="Ask me..."
-            disabled={status === "streaming"}
+            disabled={status !== "ready"}
             onChange={handleInputChange}
           />
         </form>

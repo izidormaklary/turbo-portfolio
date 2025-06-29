@@ -12,6 +12,7 @@ export default function Home() {
         .map(async (e) => {
           const pageData = await getPageContent(e.id);
           const [group, title] = e.child_page.title.split(":");
+
           return {
             pageId: e.id,
             title,

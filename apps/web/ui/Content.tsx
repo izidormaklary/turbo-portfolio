@@ -31,11 +31,11 @@ export default function Content({ pages }: Props) {
   }, [params, grouped]);
 
   return (
-    <div className="container min-h-screen mx-auto">
-      <main className="flex flex-row justify-evenly gap-[32px] row-start-2 items-center sm:items-start">
+    <main className="container min-h-screen mx-auto">
+      <div className="flex relative flex-row justify-evenly gap-[32px] row-start-2 items-center sm:items-start">
         <ProjectNav pages={pages} />
         <ProjectGroup pages={selectedGroup} />
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
