@@ -11,7 +11,7 @@ export default function ImageBlock({ block }: Props) {
   const { description } = parseCaptionFromImageBlock(block);
   return (
     <div>
-      <div className=" aspect-[3/2]  relative w-full">
+      <div className=" aspect-[3/2] mx-auto relative w-full md:max-w-2xl">
         <Image
           key={block.id}
           className="rounded-md"
