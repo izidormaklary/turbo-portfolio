@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       similarity: cosineSimilarity(userQueryEmbedding, chunk.embedding),
     }))
     .sort((a, b) => b.similarity - a.similarity)
-    .slice(0, 3)
+    .slice(0, 5)
     .filter((r) => r.similarity > 0.13); // Filter out low similarity chunks
 
   const messages: { role: "system" | "user"; content: string }[] = [
