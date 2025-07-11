@@ -12,6 +12,7 @@ export async function POST(req: NextRequest) {
     model: openai.embedding("text-embedding-3-small"),
     value: messages[messages.length - 1].content,
   });
+
   const ranked = (
     chunks as { chunk: string; id: string; embedding: number[] }[]
   )

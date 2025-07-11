@@ -2,7 +2,6 @@
 import React, { useCallback } from "react";
 import Project from "./Project";
 import { ListBlockChildrenResponse } from "@notionhq/client";
-import Link from "next/link";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 interface Props {

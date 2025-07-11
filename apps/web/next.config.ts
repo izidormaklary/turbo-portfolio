@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [new URL("https://ik.imagekit.io/izidor/**")],
   },
+  experimental: {
+    useCache: true,
+  },
 };
 
 export default nextConfig;

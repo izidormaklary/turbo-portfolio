@@ -6,7 +6,6 @@ interface Props {
   notionData: BlockObjectResponse[];
 }
 export default function RenderPage({ notionData }: Props): React.JSX.Element {
-  console.log("RenderPage", notionData);
   return (
     <div className="flex flex-col justify-center gap-0 ">
       {notionData.map((block) => {
