@@ -12,7 +12,10 @@ export default function Chat() {
   useEffect(() => {
     // Scroll to the bottom of the chat when new messages are added
     if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      chatRef.current.scrollTo({
+        top: chatRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages]);
   return (
