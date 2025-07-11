@@ -17,24 +17,53 @@ export default function Content({ pages }: Props) {
   const grouped = groupBy(pages, (p) => p.group);
   const params = useSearchParams();
 
-  const selectedGroup = useMemo(() => {
-    const project = params.get("project")?.toLowerCase();
-    if (!project || typeof project !== "string") return grouped["about"];
+  const { selectedGroup, previousGroupFirstProject, nextGroupFirstProject } =
+    useMemo(() => {
+      const project = params.get("project")?.toLowerCase();
 
-    return (
-      Object.entries(grouped).find(([, p]) =>
-        p
-          .map((e) => e.title.toLowerCase())
-          .includes(project.replace("-", " ").toLowerCase())
-      )?.[1] || grouped["about"]
-    );
-  }, [params, grouped]);
+      const groupEntries = Object.entries(grouped);
+      const [selectedGroupName, selectedGroup] = groupEntries.find(
+        ([g, pages]) =>
+          pages
+            .map((e) => e.title.toLowerCase())
+            .includes(project?.replace("-", " ").toLowerCase() || "about")
+      ) || ["about", grouped["about"]];
+      const groupNames = Object.keys(grouped);
+      const selectedGroupIndex = groupNames.indexOf(selectedGroupName);
+      const previousGroupFirstProject =
+        grouped[
+          selectedGroupIndex > 0
+            ? groupNames[selectedGroupIndex - 1]
+            : groupNames[groupNames.length - 1]
+        ][0];
+      const nextGroupFirstProject =
+        grouped[
+          selectedGroupIndex < groupNames.length - 1
+            ? groupNames[selectedGroupIndex + 1]
+            : groupNames[0]
+        ][0];
+      return {
+        selectedGroup,
+        previousGroupFirstProject: {
+          title: previousGroupFirstProject.title,
+          group: previousGroupFirstProject.group,
+        },
+        nextGroupFirstProject: {
+          title: nextGroupFirstProject.title,
+          group: nextGroupFirstProject.group,
+        },
+      };
+    }, [params, grouped]);
 
   return (
     <main className="container min-h-screen mx-auto">
       <div className="flex relative flex-row justify-evenly gap-[32px] row-start-2 items-center sm:items-start">
         <ProjectNav pages={pages} />
-        <ProjectGroup pages={selectedGroup} />
+        <ProjectGroup
+          pages={selectedGroup}
+          previousGroupFirstProject={previousGroupFirstProject}
+          nextGroupFirstProject={nextGroupFirstProject}
+        />
       </div>
     </main>
   );
