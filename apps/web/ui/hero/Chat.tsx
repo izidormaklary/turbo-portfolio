@@ -1,41 +1,30 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit, status } = useChat({
     api: "/api/summary",
   });
-  const [focused, setFocused] = useState(false);
-
-  useEffect(() => {
-    if (focused) {
-      const chatInput = document.getElementById("chat-input");
-      if (chatInput) {
-        chatInput.focus();
-      }
-    }
-  }, [focused]);
-  useEffect(() => {
-    //unfocus
-    const chatInput = document.getElementById("chat-input");
-
-    chatInput!.addEventListener("blur", () => {
-      setFocused(false);
-    });
-  }, []);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     // Scroll to the bottom of the chat when new messages are added
-    const chatContainer = document.getElementById("chat");
-    if (chatContainer) {
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages]);
   return (
-    <div className="" onClick={() => setFocused(true)}>
+    <div
+      onClick={() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }}
+    >
       <div
-        className={` cursor-text max-w-[720px] transition-all px-5 pt-4 ${focused ? "shadow-xl" : "shadow-lg"}  shadow-amber-200/20  border-[0.1] border-b-gray-50 text-gray-100 text-sm font-mono subpixel-antialiased 
+        className={` cursor-text max-w-[720px] transition-all px-5 pt-4  shadow-lg focus-within:shadow-xl  shadow-amber-200/20  border-[0.1] border-b-gray-50 text-gray-100 text-sm font-mono subpixel-antialiased 
               bg-gray-950     rounded-lg leading-normal overflow-hidden`}
       >
         <div className="top mb-2 flex">
@@ -43,7 +32,7 @@ export default function Chat() {
           <div className="ml-2 h-3 w-3 bg-orange-300 rounded-full"></div>
           <div className="ml-2 h-3 w-3 bg-green-500 rounded-full"></div>
         </div>
-        <div id={"chat"} className="h-32 sm:h-36 overflow-y-auto">
+        <div ref={chatRef} className="h-32 sm:h-36 overflow-y-auto">
           <div className="text-fuchsia-300">
             <span>{"Izidor-> "}</span>{" "}
             {`feel free to ask any questions you have
@@ -77,8 +66,8 @@ export default function Chat() {
           <span className="text-amber-300">{"usr-> "}</span>{" "}
           <input
             id="chat-input"
-            onFocus={() => setFocused(true)}
-            // autoFocus={true}
+            autoFocus={true}
+            ref={inputRef}
             className="p-0 px-4 not-focus-visible:animate-pulse grow inline-block focus:ring-red-500/10 focus:outline-0"
             value={input}
             placeholder="Ask me..."
